@@ -87,32 +87,7 @@ namespace HotFix
             string code = jsonData["code"].ToString();
             if (code.Equals("200"))
             {
-                StartWindow.setText("------正在获取马匹信息------");
-                UserInfoManager.MyHorseList.Clear();
-                UserInfoManager.MyHorseList = new Dictionary<int, HorseData>();
-                HorseData[] list = JsonMapper.ToObject<HorseData[]>(jsonData["data"].ToJson());
-                int index = 1;
-                foreach (HorseData item in list)
-                {
-                    int id = int.Parse(item.id);
-                    Debug.Log(id + "   " + item.code);
-                    UserInfoManager.MyHorseList.Add(index, item);
-                    index++;
-                }
-                UserInfoManager.NowHorseList.Clear();
-                UserInfoManager.NowHorseList = new Dictionary<int, HorseData>(UserInfoManager.MyHorseList);
-                Debug.Log("进入游戏");
-                if (UserInfoManager.noHorse)
-                    return;
-                if(UserInfoManager.Sex == 0)
-                {
-                    UIManager.instance.PopUpWnd(FilesName.SELECTPLAYERPANEL, true, false);
-                }
-                else
-                {
-                    GameMapManager.instance.LoadScene(ConStr.MAINSCENE, FilesName.MAINPANEL, HouseManager.LoadMainScene);
-                }
-                UIManager.instance.CloseWnd(FilesName.STARTPANEL);
+               
             }
             else
             {
