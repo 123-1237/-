@@ -13,7 +13,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
