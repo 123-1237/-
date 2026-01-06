@@ -27,26 +27,51 @@ namespace HotFix
 
         void AddAllBtnListener()
         {
-            AddButtonClickListener(closeBtn, CloseWndFunc);
+            AddButtonClickListener(closeBtn, () => { UIManager.instance.CloseWnd(this); });
             AddButtonClickListener(siYangChangBtn, GoToSiYangChang);
             AddButtonClickListener(fanYuChangBtn, GoToSaiYangChang);
             AddButtonClickListener(saiMaChangBtn, GoToFanYangChang);
+
 
         }
 
         private void GoToFanYangChang()
         {
-            MessageCenter.instance.Dispatch(MessageCenterEventID.PlayerChangePosition, new Notification(3));
-        }
+            Debug.Log("点击赛马场按钮");
+            RFrameWork.instance.OpenCommonConfirm("提示", "是否传送赛马场？", () =>
+            {
+                MessageCenter.instance.Dispatch(MessageCenterEventID.PlayerChangePosition, new Notification(2));
 
+            }, () => { });
+        }
+        //hotfix中
+        //弹窗逻辑
+        //网络 hotfix中所有webrequestmanager替换为//webrequestmananger  把所有web网络相关内容全部注释掉
+        //serrequestmanager中所有添加的事件全部注释掉
+
+        //asset里面的脚本 rframework
+        //rframework中 netmananger相关内容全部注释掉
+        //赛马场
         private void GoToSaiYangChang()
         {
-            MessageCenter.instance.Dispatch(MessageCenterEventID.PlayerChangePosition, new Notification(2));
+            Debug.Log("点击赛马场按钮");
+            RFrameWork.instance.OpenCommonConfirm("提示", "是否传送繁育场？", () =>
+            {
+                MessageCenter.instance.Dispatch(MessageCenterEventID.PlayerChangePosition, new Notification(3));
+
+            }, () => { });
+            // 
+
         }
 
         void GoToSiYangChang()
         {
-            MessageCenter.instance.Dispatch(MessageCenterEventID.PlayerChangePosition, new Notification(1));
+            Debug.Log("点击赛马场按钮");
+            RFrameWork.instance.OpenCommonConfirm("提示", "是否传送饲养场？", () =>
+            {
+                MessageCenter.instance.Dispatch(MessageCenterEventID.PlayerChangePosition, new Notification(1));
+
+            }, () => { });
         }
 
 
