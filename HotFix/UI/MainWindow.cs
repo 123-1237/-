@@ -219,7 +219,7 @@ namespace HotFix
 
         private void ShowHorseData()
         {
-            UserInfoManager.detailPanelType = 1;
+          //  UserInfoManager.detailPanelType = 1;
             //WebRequestManager.instance.AsyncLoadUnityWebRequest(WebRequestUtils.detailFront + "/" + horseID, WebRequestFuncitons.GetHorseDetailData, true, "{}", RFrameWork.instance.token);
         }
 
