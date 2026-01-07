@@ -1,12 +1,12 @@
 ﻿
+using System;
 using UnityEngine.UI;
 
 namespace HotFix
 {
     internal class HorseFeedWindow : Window
     {
-
-        private Button Money;
+        private Button closeBtn;
 
 
 
@@ -18,25 +18,17 @@ namespace HotFix
         void AddAllBtnListener()
         {
 
-            AddButtonClickListener(Money, ShowMoneyPanel);
+            AddButtonClickListener(closeBtn, ClosePanel);
 
         }
-
-        private void Closepanel()
+        private void ClosePanel()
         {
+            // 确保正确关闭当前窗口
             UIManager.instance.CloseWnd(FilesName.HORSEFEEDPANEL);
-        }
-
-        private void ShowMoneyPanel()
-        {
-            UIManager.instance.PopUpWnd(FilesName.HORSEFEEDPANEL, true, false, Money.transform);
         }
         private void GatAllComponent()
         {
-            Money = m_Transform.Find("Btns/Money").GetComponent<Button>();
+            closeBtn = m_Transform.Find("CloseBtn").GetComponent<Button>();
         }
-
-
     }
-
 }
