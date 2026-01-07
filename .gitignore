@@ -1,9 +1,6 @@
 
+HotFix/.idea
 HotFix/.vs
 HotFix/bin
-HotFix/.idea
-*.dll
 HotFix/HotFix.sln.DotSettings.user
-HotFix/obj/Debug/HotFix.csproj.AssemblyReference.cache
-.git.zip
-*.cache
+*.dll
