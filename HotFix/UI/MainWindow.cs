@@ -169,10 +169,12 @@ namespace HotFix
 
         private void LeaseHorsePanel()
         {
-            JsonData data = new JsonData();
-            data["pageNum"] = 1;
-            data["pageSize"] = 6;
-            data["priceSort"] = 0;
+            UIManager.instance.PopUpWnd(FilesName.RENTPANEL);
+            //JsonData data = new JsonData();
+            //data["pageNum"] = 1;
+            //data["pageSize"] = 6;
+            //data["priceSort"] = 0;
+           // UIManager.instance.PopUpWnd(FilesName.RENTPANEL);
             //WebRequestManager.instance.AsyncLoadUnityWebRequest(WebRequestUtils.rentHorseList, WebRequestFuncitons.GetRentHorseList, true, JsonMapper.ToJson(data), RFrameWork.instance.token);
         }
 
@@ -183,6 +185,7 @@ namespace HotFix
 
         private void SharePicFunc()
         {
+            
             //ToolManager.ShareMsgToApp(m_Transform.GetComponent<RectTransform>());
             UserInfoManager.rankStr = "邀请您下载元年app体验「马术元宇宙」";
             UIManager.instance.PopUpWnd(FilesName.SHAREPANEL);
