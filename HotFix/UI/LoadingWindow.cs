@@ -28,7 +28,12 @@ namespace HotFix
         private Action<Action> action = null;
 
         private object[] objs = null;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="param1"></param>
+        /// <param name="param2"></param>
+        /// <param name="param3"></param>
         public override void Awake(object param1 = null, object param2 = null, object param3 = null)
         {
             m_MainPanel = m_GameObject.GetComponent<LoadingPanel>();
