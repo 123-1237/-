@@ -262,3 +262,10 @@ E:\马术\HotFix\HotFix\obj\Debug\HotFix.csproj.CoreCompileInputs.cache
 E:\马术\HotFix\HotFix\obj\Debug\HotFix.csproj.Up2Date
 E:\马术\HotFix\HotFix\obj\Debug\HotFix.dll
 E:\马术\HotFix\HotFix\obj\Debug\HotFix.pdb
+E:\面试题\马术\HotFix\HotFix\bin\Debug\HotFix.dll
+E:\面试题\马术\HotFix\HotFix\bin\Debug\HotFix.pdb
+E:\面试题\马术\HotFix\HotFix\obj\Debug\HotFix.csproj.AssemblyReference.cache
+E:\面试题\马术\HotFix\HotFix\obj\Debug\HotFix.csproj.CoreCompileInputs.cache
+E:\面试题\马术\HotFix\HotFix\obj\Debug\HotFix.csproj.Up2Date
+E:\面试题\马术\HotFix\HotFix\obj\Debug\HotFix.dll
+E:\面试题\马术\HotFix\HotFix\obj\Debug\HotFix.pdb
