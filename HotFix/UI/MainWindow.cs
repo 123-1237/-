@@ -185,6 +185,7 @@ namespace HotFix
         {
             //ToolManager.ShareMsgToApp(m_Transform.GetComponent<RectTransform>());
             UserInfoManager.rankStr = "邀请您下载元年app体验「马术元宇宙」";
+            UIManager.instance.PopUpWnd(FilesName.SHAREPANEL);
             //WebRequestManager.instance.AsyncLoadUnityWebRequest(WebRequestUtils.myInvite, WebRequestFuncitons.ShareFunc, true, "{}", RFrameWork.instance.token);
         }
 
