@@ -13,10 +13,8 @@ namespace HotFix
         GameObject panel3; // 租赁记录
         GameObject panel4; // 我的租赁
         GameObject panel5; // 所有马匹
-
-     
-        Button myXiangqingBtn; // 马匹详情
-        Button myPeieBtn;     //马匹配额
+        
+        Button myPeieBtn;   //马匹配额
         Button myChuzuBtn;  // 我的出租
         Button myZulinBtn;  // 我租赁的马匹
         Button quitBtn;     // 退出
@@ -27,7 +25,6 @@ namespace HotFix
             base.Awake(param1, param2, param3);
             FindAllComponent();
             AddAllBtnListtener();
-            HideAllPanels();
         }
 
        
@@ -41,9 +38,6 @@ namespace HotFix
             panel3 = m_Transform.Find("HistoryList").gameObject;
             panel4 = m_Transform.Find("MyRentOutList").gameObject;
             panel5 = m_Transform.Find("HorseRentOutList").gameObject;
-
-          
-            myXiangqingBtn = m_Transform.Find("HorseRentOutList/Viewport/Content/Item/Btn").GetComponent<Button>();
             myPeieBtn = m_Transform.Find("LeaseHorseList/HirtoryBtn").GetComponent<Button>();
             myChuzuBtn = m_Transform.Find("HorseRentOutList/RightBtns/RentOutBtn").GetComponent<Button>();
             myZulinBtn = m_Transform.Find("HorseRentOutList/RightBtns/RentOutHorseBtn").GetComponent<Button>();
@@ -53,33 +47,27 @@ namespace HotFix
         }
 
     
+        /// <summary>
         /// 绑定所有按钮事件
-
+        /// </summary>
         private void AddAllBtnListtener()
         {
-            //马匹详情
-            AddButtonClickListener(myXiangqingBtn, () =>
-            {
-                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, 2, null, null);
-            });
             // 马匹配额
             AddButtonClickListener(myPeieBtn, () =>
             {
                 UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, 3, null, null);
             });
 
-
-
             // 我的出租 → 我的租赁
             AddButtonClickListener(myChuzuBtn, () =>
             {
-                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, 4, null, null);
+                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, new object[]{4,1}, null, null);
             });
 
             // 我租赁的马匹 → 租赁马匹
             AddButtonClickListener(myZulinBtn, () =>
             {
-                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, 1, null, null);
+                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, new object[4,2], null, null);
             });
 
             // 退出按钮 → 关闭窗口
@@ -87,7 +75,6 @@ namespace HotFix
             {
                 UIManager.instance.CloseWnd(FilesName.COMMONDATAPANEL);
             });
-
         }
 
     
@@ -106,11 +93,9 @@ namespace HotFix
         public override void OnShow(object param1 = null, object param2 = null, object param3 = null)
         {
            
-            int showType = param1 == null ? 5 : Convert.ToInt32(param1);
+            int showType = param1 == null ? 5 : (int)param1;
 
-            HideAllPanels();
-
-            // 显示对应面板
+            // 显示对应面板x
             panel1.SetActive(showType == 1);
             panel2.SetActive(showType == 2);
             panel3.SetActive(showType == 3);
@@ -119,13 +104,6 @@ namespace HotFix
 
             // 更新标题
             UpdateTitle(showType);
-
-           
-            if (showType == 4)
-            {
-                Text countDown = panel4.transform.Find("Viewport/Content/Item/CountDown").GetComponent<Text>();
-                countDown.text = "距可撤销23:50:60";
-            }
         }
 
   
