@@ -9,9 +9,15 @@ using UnityEngine;
 using LitJson;
 using System.Xml.Linq;
 using System.Security.Cryptography;
+using MalbersAnimations.Controller;
+using MalbersAnimations;
+using static Cinemachine.CinemachineCore;
+using static UnityEngine.TouchScreenKeyboard;
+using UnityEngine.Rendering;
 
 namespace HotFix
 {
+   
     public static class JsonConfigManager
     {
         private static List<AllPrefabsData> allPrefabsData = null;
@@ -20,6 +26,9 @@ namespace HotFix
         private static Dictionary<int, BuildingData> buildingDataDic = new Dictionary<int, BuildingData>();
         private static Dictionary<string, string> HorseBloodDataDic = new Dictionary<string, string>();
         private static Dictionary<string, string> HorseTypeDataDic = new Dictionary<string, string>();
+        private static Dictionary<int, string> ZTableDataDic = new Dictionary<int, string>();
+        //private static List<GetHorseDataClass> HorseData = null;
+        private static Dictionary<string, string> HorseDataDic = new Dictionary<string, string>();
         private static string parentPath = "Assets/GameData/Data/Json/";
         public static List<string> buildingDataList = new List<string>()
         {
@@ -143,6 +152,40 @@ namespace HotFix
                 });
             }
             return HorseTypeDataDic;
+        }  
+        internal static Dictionary<int, string> GetZTable()
+        {
+            if (ZTableDataDic.Count<=0)
+            {
+                ZTableDataDic = new Dictionary<int, string>();
+                AnalyzeJson("ZTable", (JsonData temp) =>
+                {
+                    foreach (JsonData item in temp["data"])
+                    {
+                        ZTable t = JsonMapper.ToObject<ZTable>(item.ToJson());
+                        ZTableDataDic.Add(t.ID, t.Name);
+                        Debug.Log("ZTableDataDic" + t.ID+t.Name);
+                    }
+                });
+            }
+            return ZTableDataDic;
+        }
+        internal static Dictionary<string, string> GetHorseData()
+        {
+            if (HorseDataDic.Count <= 0)
+            {
+                HorseDataDic = new Dictionary<string, string>();
+                AnalyzeJson("HorseData", (JsonData temp) =>
+                {
+                    foreach (JsonData item in temp["data"])
+                    {
+                        HorseData t = JsonMapper.ToObject<HorseData>(item.ToJson());
+                        HorseDataDic.Add(t.id, t.code);
+                        Debug.Log(t.id  + t.code);
+                    }
+                });
+            }
+            return HorseDataDic;
         }
     }
 }

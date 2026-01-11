@@ -102,10 +102,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\RuanJian\2022.3.62f2c1\Editor\Data\Managed\UnityEngine\UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TextCoreFontEngineModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\RuanJian\2022.3.62f2c1\Editor\Data\Managed\UnityEngine\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\RuanJian\2022.3.62f2c1\Editor\Data\Managed\UnityEngine\UnityEngine.TextRenderingModule.dll</HintPath>
@@ -134,6 +130,7 @@
     <Compile Include="GameDatas\ClientData\CommonData.cs" />
     <Compile Include="GameDatas\ClientData\HistoryData.cs" />
     <Compile Include="GameDatas\FilesName.cs" />
+    <Compile Include="GameDatas\GetHorseDataClass.cs" />
     <Compile Include="GameDatas\HorseBodyDatas.cs" />
     <Compile Include="GameDatas\PlayerTypeData.cs" />
     <Compile Include="GameDatas\ServerData\Request\BreedSiteList.cs" />

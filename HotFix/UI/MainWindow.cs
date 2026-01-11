@@ -75,6 +75,7 @@ namespace HotFix
 
         public override void Awake(object param1 = null, object param2 = null, object param3 = null)
         {
+            var horseDataDictionary = JsonConfigManager.GetHorseData();
             MountHorse = ShowMountHorseBtn;
             GetDownHorse = ShowGetDownHorseBtn;
             PutFood = ShowPutFoodBtn;
@@ -169,7 +170,7 @@ namespace HotFix
 
         private void LeaseHorsePanel()
         {
-            UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL,true,false,5,null,null);
+            UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL,true,false,new object[]{5},null,null);
             //JsonData data = new JsonData();
             //data["pageNum"] = 1;
             //data["pageSize"] = 6;

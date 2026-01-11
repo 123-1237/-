@@ -18,6 +18,9 @@ namespace HotFix
         Button myChuzuBtn;  // 我的出租
         Button myZulinBtn;  // 我租赁的马匹
         Button quitBtn;     // 退出
+        Button allBtn;     // 全部
+        Button chuzuBtn;     // 出租中
+        Button zulinBtn;     // 租赁中
         Text quotaTitleText;// 标题
 
         public override void Awake(object param1 = null, object param2 = null, object param3 = null)
@@ -42,6 +45,9 @@ namespace HotFix
             myChuzuBtn = m_Transform.Find("HorseRentOutList/RightBtns/RentOutBtn").GetComponent<Button>();
             myZulinBtn = m_Transform.Find("HorseRentOutList/RightBtns/RentOutHorseBtn").GetComponent<Button>();
             quitBtn = m_Transform.Find("QuitBtn").GetComponent<Button>();
+            allBtn = m_Transform.Find("MyRentOutList/Btns/All").GetComponent<Button>();
+            chuzuBtn = m_Transform.Find("MyRentOutList/Btns/Doing").GetComponent<Button>();
+            zulinBtn = m_Transform.Find("MyRentOutList/Btns/Quota").GetComponent<Button>();
             quotaTitleText = quitBtn.transform.Find("QuotaText").GetComponent<Text>();
 
         }
@@ -67,7 +73,7 @@ namespace HotFix
             // 我租赁的马匹 → 租赁马匹
             AddButtonClickListener(myZulinBtn, () =>
             {
-                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, new object[4,2], null, null);
+                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, new object[] { 4, 2 }, null, null);
             });
 
             // 退出按钮 → 关闭窗口
@@ -93,7 +99,8 @@ namespace HotFix
         public override void OnShow(object param1 = null, object param2 = null, object param3 = null)
         {
            
-            int showType = param1 == null ? 5 : (int)param1;
+            int showType = param1 == null ? 5 : (int)(param1 as object[])[0];
+          
 
             // 显示对应面板x
             panel1.SetActive(showType == 1);
@@ -101,7 +108,16 @@ namespace HotFix
             panel3.SetActive(showType == 3);
             panel4.SetActive(showType == 4);
             panel5.SetActive(showType == 5);
+            if (showType == 4)
+            {
+                int showType2 = param1 == null ? 5 : (int)(param1 as object[])[1];
+                allBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 3);
+                chuzuBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 1);
+                zulinBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 2);
+            }
+ 
 
+            
             // 更新标题
             UpdateTitle(showType);
         }

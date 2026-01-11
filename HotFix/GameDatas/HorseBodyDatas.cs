@@ -53,4 +53,16 @@ namespace HotFix
             this.type = type;
         }
     }
+    [System.Serializable]
+    public class ZTable
+    {
+        public int ID;
+        public string Name;
+
+        public ZTable(int id, string name)
+        {
+            ID = id;
+            Name = name;
+        }
+    }  
 }
