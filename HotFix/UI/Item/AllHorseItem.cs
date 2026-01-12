@@ -30,16 +30,19 @@ namespace HotFix
         }
         public void SetData(HorseDetail data)
         {
+
             m_Data = data;
             m_Name.text = m_Data.name;
             m_Price.text = m_Data.price.ToString();
             m_DetileBtn.onClick.RemoveAllListeners();
-            m_DetileBtn.onClick.AddListener(() => {
-
+            m_DetileBtn.onClick.AddListener(() =>
+            {
+                UIManager.instance.PopUpWnd(FilesName.DETAILPANEL, true, false, m_Data);
             });
 
             m_LeaseBtn.onClick.RemoveAllListeners();
-            m_LeaseBtn.onClick.AddListener(() => {
+            m_LeaseBtn.onClick.AddListener(() =>
+            {
 
             });
 

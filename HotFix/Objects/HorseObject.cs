@@ -20,7 +20,7 @@ namespace HotFix
         Material eyesMaterial;
         string datastr = "F-00-RR-CA-G1-W2-DP00";
         HorseData data;
-        TriggerEvent horseEvent;
+      //  TriggerEvent horseEvent;
         Animator ani;
         public bool isMount = false;
         // Start is called before the first frame update
@@ -38,8 +38,8 @@ namespace HotFix
             Debug.Log("查找马匹身上材质");
             ani = m_Transform.GetComponent<Animator>();
             Debug.Log("获取动画");
-            horseEvent = m_Transform.GetComponent<TriggerEvent>();
-            horseEvent.ClickAct = ClickHorseAct;
+           // horseEvent = m_Transform.GetComponent<TriggerEvent>();
+           // horseEvent.ClickAct = ClickHorseAct;
         }
 
         public override void OnShow(object param1 = null, object param2 = null, object param3 = null)
