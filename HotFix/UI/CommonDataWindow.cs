@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -22,6 +23,9 @@ namespace HotFix
         Button chuzuBtn;     // 出租中
         Button zulinBtn;     // 租赁中
         Text quotaTitleText;// 标题
+       private Transform allHorseDataContent;
+        private List<AllHorseItem> AllHorseItems= new List<AllHorseItem>();
+        //  private GameObject allHorseDataItem;
 
         public override void Awake(object param1 = null, object param2 = null, object param3 = null)
         {
@@ -49,6 +53,8 @@ namespace HotFix
             chuzuBtn = m_Transform.Find("MyRentOutList/Btns/Doing").GetComponent<Button>();
             zulinBtn = m_Transform.Find("MyRentOutList/Btns/Quota").GetComponent<Button>();
             quotaTitleText = quitBtn.transform.Find("QuotaText").GetComponent<Text>();
+            allHorseDataContent= m_Transform.Find("HorseRentOutList/Viewport/Content");
+          //  allHorseDataItem = m_Transform.Find("HorseRentOutList/Viewport/Content/Item").gameObject;
 
         }
 
@@ -120,6 +126,7 @@ namespace HotFix
             
             // 更新标题
             UpdateTitle(showType);
+            SetPanelState(showType);
         }
 
   
@@ -135,7 +142,47 @@ namespace HotFix
                 default: quotaTitleText.text = "所有马匹"; break;
             }
         }
+        void SetPanelState(int showType)
+        {
+            if (showType == 5)
+            {
+                for (global::System.Int32 i = 0; i < allHorseDataContent.childCount; i++)
+                {
+                    allHorseDataContent.GetChild(i).gameObject.SetActive(false);
+
+                }
+
+                for (global::System.Int32 i = 0; i < UserInfoManager.HorseDetails.Count; i++)
+                {
+                    GameObject itemObj;
+                    if (i < allHorseDataContent.childCount)
+                    {
+
+                        itemObj = allHorseDataContent.GetChild(i).gameObject;
+                    }
+                    else
+                    {
+                        itemObj = GameObject.Instantiate(allHorseDataContent.GetChild(0).gameObject, allHorseDataContent);
+                    }
+                    AllHorseItem item = null;
+                    if (i < AllHorseItems.Count)
+                    {
+                        item = AllHorseItems[i];
+                        item.SetData(UserInfoManager.HorseDetails[i]);
+                    }
+                    else
+                    {
+                        item = new AllHorseItem();
+                        item.init(itemObj, UserInfoManager.HorseDetails[i]);
+                        AllHorseItems.Add(item);
+                    }
+                }
+            }
+        }
     }
+}
+
+
+    
 
    
-}

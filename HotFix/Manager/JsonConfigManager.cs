@@ -27,6 +27,8 @@ namespace HotFix
         private static Dictionary<string, string> HorseBloodDataDic = new Dictionary<string, string>();
         private static Dictionary<string, string> HorseTypeDataDic = new Dictionary<string, string>();
         private static Dictionary<int, string> ZTableDataDic = new Dictionary<int, string>();
+        private static List<HorseDetail> allHorseDetails = null;
+
         //private static List<GetHorseDataClass> HorseData = null;
         private static Dictionary<string, string> HorseDataDic = new Dictionary<string, string>();
         private static string parentPath = "Assets/GameData/Data/Json/";
@@ -186,6 +188,25 @@ namespace HotFix
                 });
             }
             return HorseDataDic;
+        }
+        internal static List<HorseDetail> GetAllHorseDetails()
+        {
+            if (allHorseDetails != null)
+                return allHorseDetails;
+            {
+                allHorseDetails = new List<HorseDetail>();
+                AnalyzeJson("HorseData", (JsonData temp) =>
+                {
+                    foreach (JsonData item in temp["data"])
+                    {
+                        HorseDetail detail = JsonMapper.ToObject<HorseDetail>(item.ToJson());
+                        Debug.LogError(detail.id +"             3456786543   "+ detail.name);
+                        allHorseDetails.Add(detail);
+
+                    }
+                });
+            }
+            return allHorseDetails;
         }
     }
 }
