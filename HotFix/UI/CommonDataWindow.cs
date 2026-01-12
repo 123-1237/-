@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -7,21 +8,24 @@ namespace HotFix
 {
     internal class CommonDataWindow : Window
     {
-        
+
         GameObject panel1; // 租赁马匹
         GameObject panel2; // 马匹配额
         GameObject panel3; // 租赁记录
         GameObject panel4; // 我的租赁
         GameObject panel5; // 所有马匹
-        
+
         Button myPeieBtn;   //马匹配额
         Button myChuzuBtn;  // 我的出租
         Button myZulinBtn;  // 我租赁的马匹
         Button quitBtn;     // 退出
         Button allBtn;     // 全部
-        Button chuzuBtn;     // 出租中
-        Button zulinBtn;     // 租赁中
+        Button chuZuBtn;     // 出租中
+        Button zuLinBtn;     // 租赁中
         Text quotaTitleText;// 标题
+        private Transform allHorseDataContent;
+        List<AllHorseItem> allHorseItems = new List<AllHorseItem>();
+
 
         public override void Awake(object param1 = null, object param2 = null, object param3 = null)
         {
@@ -30,12 +34,12 @@ namespace HotFix
             AddAllBtnListtener();
         }
 
-       
-        /// 查找所有组件
-      
+
+        //查找所有组件
+
         private void FindAllComponent()
         {
-            
+
             panel1 = m_Transform.Find("LeaseHorseList").gameObject;
             panel2 = m_Transform.Find("QuotaList").gameObject;
             panel3 = m_Transform.Find("HistoryList").gameObject;
@@ -46,28 +50,26 @@ namespace HotFix
             myZulinBtn = m_Transform.Find("HorseRentOutList/RightBtns/RentOutHorseBtn").GetComponent<Button>();
             quitBtn = m_Transform.Find("QuitBtn").GetComponent<Button>();
             allBtn = m_Transform.Find("MyRentOutList/Btns/All").GetComponent<Button>();
-            chuzuBtn = m_Transform.Find("MyRentOutList/Btns/Doing").GetComponent<Button>();
-            zulinBtn = m_Transform.Find("MyRentOutList/Btns/Quota").GetComponent<Button>();
+            chuZuBtn = m_Transform.Find("MyRentOutList/Btns/Doing").GetComponent<Button>();
+            zuLinBtn = m_Transform.Find("MyRentOutList/Btns/Quota").GetComponent<Button>();
             quotaTitleText = quitBtn.transform.Find("QuotaText").GetComponent<Text>();
-
+            allHorseDataContent = m_Transform.Find("HorseRentOutList/Viewport/Content");
         }
 
-    
-        /// <summary>
-        /// 绑定所有按钮事件
-        /// </summary>
+        //绑定所有按钮事件
         private void AddAllBtnListtener()
         {
             // 马匹配额
             AddButtonClickListener(myPeieBtn, () =>
             {
-                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, 3, null, null);
+                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, new object[] { 3 }, null, null);
             });
 
             // 我的出租 → 我的租赁
             AddButtonClickListener(myChuzuBtn, () =>
             {
-                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, new object[]{4,1}, null, null);
+                UIManager.instance.PopUpWnd(FilesName.COMMONDATAPANEL, true, false, new object[] { 4, 1 }, null, null);
+
             });
 
             // 我租赁的马匹 → 租赁马匹
@@ -83,24 +85,12 @@ namespace HotFix
             });
         }
 
-    
-        private void HideAllPanels()
-        {
-            panel1.SetActive(false);
-            panel2.SetActive(false);
-            panel3.SetActive(false);
-            panel4.SetActive(false);
-            panel5.SetActive(false);
-        }
-
-      
         // 显示对应界面
-    
+
         public override void OnShow(object param1 = null, object param2 = null, object param3 = null)
         {
-           
+
             int showType = param1 == null ? 5 : (int)(param1 as object[])[0];
-          
 
             // 显示对应面板x
             panel1.SetActive(showType == 1);
@@ -108,21 +98,60 @@ namespace HotFix
             panel3.SetActive(showType == 3);
             panel4.SetActive(showType == 4);
             panel5.SetActive(showType == 5);
+
             if (showType == 4)
             {
                 int showType2 = param1 == null ? 5 : (int)(param1 as object[])[1];
-                allBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 3);
-                chuzuBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 1);
-                zulinBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 2);
-            }
- 
 
-            
+                allBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 3);
+                chuZuBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 1);
+                zuLinBtn.transform.GetChild(0).gameObject.SetActive(showType2 == 2);
+            }
+
+
             // 更新标题
             UpdateTitle(showType);
+            SetPanelState(showType);
+        }
+        void SetPanelState(int showType)
+        {
+            if (showType == 5)
+            {
+                for (global::System.Int32 i = 0; i < allHorseDataContent.childCount; i++)
+                {
+                    allHorseDataContent.GetChild(i).gameObject.SetActive(false);
+
+                }
+
+                for (global::System.Int32 i = 0; i < UserInfoManager.HorseDetails.Count; i++)
+                {
+                    GameObject itemObj;
+                    if (i < allHorseDataContent.childCount)
+                    {
+
+                        itemObj = allHorseDataContent.GetChild(i).gameObject;
+                    }
+                    else
+                    {
+                        itemObj = GameObject.Instantiate(allHorseDataContent.GetChild(0).gameObject, allHorseDataContent);
+                    }
+                    AllHorseItem item = null;
+                    if (i < allHorseItems.Count)
+                    {
+                        item = allHorseItems[i];
+                        item.SetData(UserInfoManager.HorseDetails[i]);
+                    }
+                    else
+                    {
+                        item = new AllHorseItem();
+                        item.init(itemObj, UserInfoManager.HorseDetails[i]);
+                        allHorseItems.Add(item);
+                    }
+                    
+                }
+            }
         }
 
-  
         private void UpdateTitle(int showType)
         {
             switch (showType)
@@ -136,6 +165,4 @@ namespace HotFix
             }
         }
     }
-
-   
 }
