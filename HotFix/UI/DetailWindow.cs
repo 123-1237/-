@@ -1,6 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Security.Cryptography;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,8 +35,23 @@ namespace HotFix
             base.Awake(param1, param2, param3);
             FindAllComponent();
             AddAllBtnListener();
-            HorseDetail horseData = (HorseDetail)param1; 
-            m_HorseObject = ObjectsManager.instance.AddObject(m_Transform.Find("BG/HorsePos").GetChild(0).gameObject,"Horse", "HorseObject",new HorseData(horseData.id,horseData.code,1,0)) as HorseObject;
+            HorseDetail horseData = (HorseDetail)param1;
+            m_HorseObject = ObjectsManager.instance.AddObject(m_Transform.Find("BG/HorsePos").GetChild(0).gameObject, "Horse", "HorseObject", new HorseData(horseData.id, horseData.code, 1, 0)) as HorseObject;
+
+            m_Name.text = horseData.name;//姓名
+            m_Age.text = horseData.age;//年龄
+
+            m_QiPaoNum.text = horseData.startSpeed;//起跑属性
+            m_SuDuNum.text = horseData.speed;// 速度属性
+            m_NaiLiNum.text = horseData.endurance;//耐力属性
+            m_ZhiHuiNum.text = horseData.wisdom;//智慧属性
+            m_YuanQiZhiNum.text = horseData.fatigue;//元气值属性
+
+            m_QiPaoSlider.value = float.Parse(horseData.startSpeed) / float.Parse(horseData.startSpeedMax);//起跑进度
+            m_SuDuSlider.value = float.Parse(horseData.speed) / float.Parse(horseData.speedMax);//速度进度
+            m_NaiLiSlider.value = float.Parse(horseData.endurance) / float.Parse(horseData.enduranceMax);//耐力进度
+            m_ZhiHuiSlider.value = float.Parse(horseData.wisdom) / float.Parse(horseData.wisdomMax);//智慧进度
+            m_YuanQiZhiSlider.value = float.Parse(horseData.fatigue) / float.Parse(horseData.fatigueMax);//元气值进度
         }
 
         private void AddAllBtnListener()
@@ -54,22 +69,22 @@ namespace HotFix
             });
         }
 
-        public  void FindAllComponent()
+        public void FindAllComponent()
         {
             m_QuitBtn = m_Transform.Find("Return").GetComponent<Button>();
             m_Name = m_Transform.Find("Back/Btns/Name").GetComponent<Text>();
-            m_SexIcon = m_Transform.Find("Back/Btns/Sex/Image").GetComponent<Image>();
+            m_SexIcon = m_Transform.Find("Back/Btns/Sex").GetComponent<Image>();
             m_Age = m_Transform.Find("Back/Btns/Name/Time/Text").GetComponent<Text>();
             m_QiPaoNum = m_Transform.Find("Back/JingSaiBack/BackImg/QiPao/SliderBack/Des").GetComponent<Text>();
             m_SuDuNum = m_Transform.Find("Back/JingSaiBack/BackImg/SuDu/SliderBack/Des").GetComponent<Text>();
             m_NaiLiNum = m_Transform.Find("Back/JingSaiBack/BackImg/NaiLi/SliderBack/Des").GetComponent<Text>();
             m_ZhiHuiNum = m_Transform.Find("Back/JingSaiBack/BackImg/ZhiHui/SliderBack/Des").GetComponent<Text>();
             m_YuanQiZhiNum = m_Transform.Find("Back/JingSaiBack/BackImg/PiLaoDu/SliderBack/Des").GetComponent<Text>();
-            m_QiPaoSlider = m_Transform.Find("Back/JingSaiBack/MyBackImg/QiPao/SliderBack").GetComponent<Slider>();
-            m_SuDuSlider = m_Transform.Find("Back/JingSaiBack/MyBackImg/SuDu/SliderBack").GetComponent<Slider>();
-            m_NaiLiSlider = m_Transform.Find("Back/JingSaiBack/MyBackImg/NaiLi/SliderBack").GetComponent<Slider>();
-            m_ZhiHuiSlider = m_Transform.Find("Back/JingSaiBack/MyBackImg/ZhiHui/SliderBack").GetComponent<Slider>();
-            m_YuanQiZhiSlider = m_Transform.Find("Back/JingSaiBack/MyBackImg/PiLaoDu/SliderBack").GetComponent<Slider>();
+            m_QiPaoSlider = m_Transform.Find("Back/JingSaiBack/BackImg/QiPao/SliderBack").GetComponent<Slider>();
+            m_SuDuSlider = m_Transform.Find("Back/JingSaiBack/BackImg/SuDu/SliderBack").GetComponent<Slider>();
+            m_NaiLiSlider = m_Transform.Find("Back/JingSaiBack/BackImg/NaiLi/SliderBack").GetComponent<Slider>();
+            m_ZhiHuiSlider = m_Transform.Find("Back/JingSaiBack/BackImg/ZhiHui/SliderBack").GetComponent<Slider>();
+            m_YuanQiZhiSlider = m_Transform.Find("Back/JingSaiBack/BackImg/PiLaoDu/SliderBack").GetComponent<Slider>();
             m_BiSaiNum = m_Transform.Find("Back/BiSaiBack/Back/DesBack/Des").GetComponent<Text>();
             m_WinNum = m_Transform.Find("Back/BiSaiBack/Back/DesBack/Num").GetComponent<Text>();
             m_JingSaiBtn = m_Transform.Find("Back/Btns/JingSai").GetComponent<Button>();
@@ -85,6 +100,12 @@ namespace HotFix
             m_BiSaiPanel.SetActive(false);
             HorseDetail horseData = (HorseDetail)param1;
             m_HorseObject.SetHorseTexture(horseData.code);
+
+
         }
+
+
+
+
     }
 }
