@@ -100,8 +100,17 @@ namespace HotFix
             string jsonStr = JsonMapper.ToJson(listFront);
             //WebRequestManager.instance.AsyncLoadUnityWebRequest(WebRequestUtils.listFront, GetConfig, true, jsonStr, RFrameWork.instance.token);
 
+            RefreshMoney(null);
+            AddTriggerEventListener();
         }
-
+        void AddTriggerEventListener()
+        {
+            MessageCenter.instance.AddListener(MessageCenterEventID.RefreshMoney, RefreshMoney);
+        }
+        void RefreshMoney(Notification notification)
+        {
+            moneyText.text = UserInfoManager.foodNum.ToString();
+        }
         private void GetTimeConfig(string jsonStr)
         {
             JsonData jsonData = JsonMapper.ToObject(jsonStr);

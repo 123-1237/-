@@ -12,7 +12,8 @@ namespace HotFix
     /// </summary>
     public static class UserInfoManager
     {
-        public static List<HorseDetail> HorseDetails = new List<HorseDetail>();
+        public static List<HorseDetail> myHorseDetails = new List<HorseDetail>();//我租赁的马匹
+        public static List<HorseDetail> HorseDetails = new List<HorseDetail>();//全部
         public static bool startGame;
         public static GameObject horseClone;
         public static string userID;
@@ -34,7 +35,7 @@ namespace HotFix
         internal static float LoadNum;
         public static Dictionary<int, HorseData> MyHorseList = new Dictionary<int, HorseData>();
         public static Dictionary<int, HorseData> NowHorseList = new Dictionary<int, HorseData>();
-        internal static float foodNum = 0;
+        internal static float foodNum = 5000000;
         internal static GameObject cmCamera = RFrameWork.instance.transform.Find("CM Player").gameObject;
         internal static GameObject camera = RFrameWork.instance.transform.Find("Camera").gameObject;
 

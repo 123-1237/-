@@ -23,6 +23,7 @@ namespace HotFix
         Button chuZuBtn;     // 出租中
         Button zuLinBtn;     // 租赁中
         Text quotaTitleText;// 标题
+        private Text moneyText;
         private Transform allHorseDataContent;
         List<AllHorseItem> allHorseItems = new List<AllHorseItem>();
 
@@ -32,9 +33,17 @@ namespace HotFix
             base.Awake(param1, param2, param3);
             FindAllComponent();
             AddAllBtnListtener();
+            AddTriggerEventListener();
+            RefreshMoney(null);
         }
-
-
+        void AddTriggerEventListener()
+        {
+            MessageCenter.instance.AddListener(MessageCenterEventID.RefreshMoney, RefreshMoney);
+        }
+        void RefreshMoney(Notification notification)
+        {
+            moneyText.text = UserInfoManager.foodNum.ToString();
+        }
         //查找所有组件
 
         private void FindAllComponent()
@@ -53,7 +62,9 @@ namespace HotFix
             chuZuBtn = m_Transform.Find("MyRentOutList/Btns/Doing").GetComponent<Button>();
             zuLinBtn = m_Transform.Find("MyRentOutList/Btns/Quota").GetComponent<Button>();
             quotaTitleText = quitBtn.transform.Find("QuotaText").GetComponent<Text>();
+            moneyText = m_Transform.transform.Find("HorseRentOutList/RightBtns/Money/Text").GetComponent<Text>();
             allHorseDataContent = m_Transform.Find("HorseRentOutList/Viewport/Content");
+          
         }
 
         //绑定所有按钮事件
@@ -135,6 +146,7 @@ namespace HotFix
                     {
                         itemObj = GameObject.Instantiate(allHorseDataContent.GetChild(0).gameObject, allHorseDataContent);
                     }
+
                     AllHorseItem item = null;
                     if (i < allHorseItems.Count)
                     {
@@ -147,7 +159,6 @@ namespace HotFix
                         item.init(itemObj, UserInfoManager.HorseDetails[i]);
                         allHorseItems.Add(item);
                     }
-                    
                 }
             }
         }

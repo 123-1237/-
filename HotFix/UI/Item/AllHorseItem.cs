@@ -19,7 +19,7 @@ namespace HotFix
 
         public void init(GameObject item, HorseDetail data)
         {
-           
+
             m_transform = item.GetComponent<Transform>();
             m_Data = data;
             m_Name = m_transform.Find("Title").GetComponent<Text>();
@@ -35,12 +35,25 @@ namespace HotFix
             m_Price.text = data.price.ToString();
             m_DetileBtn.onClick.RemoveAllListeners();
             m_DetileBtn.onClick.AddListener(() => {
-                UIManager.instance.PopUpWnd(FilesName.DETAILPANEL,true,false,m_Data);
+                UIManager.instance.PopUpWnd(FilesName.DETAILPANEL, true, false, m_Data);
             });
 
             m_LeaseBtn.onClick.RemoveAllListeners();
             m_LeaseBtn.onClick.AddListener(() => {
+                RFrameWork.instance.OpenCommonConfirm("提示", "是否花费" + m_Data.price + "租赁" + m_Data.name, () =>
+                {
+                    if (UserInfoManager.foodNum - float.Parse(m_Data.price) <= 0)
+                    {
+                        RFrameWork.instance.OpenCommonConfirm("提示", "无法购买，金币不足", () => { }, null);
+                    }
+                    else
+                    {
+                        UserInfoManager.foodNum -= float.Parse(m_Data.price);
+                        MessageCenter.instance.Dispatch(MessageCenterEventID.RefreshMoney);
+                    }
 
+                    //  MessageCenter.instance.Dispatch(MessageCenterEventID.RefrehMoney);
+                }, () => { });
             });
             m_transform.gameObject.SetActive(true);
         }

@@ -14,6 +14,7 @@ namespace HotFix
     {
        
         public const int PlayerChangePosition = 1001;
+        public const int RefreshMoney = 1002;
     }
 }
 

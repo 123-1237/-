@@ -43,7 +43,7 @@ namespace HotFix
 
             m_QiPaoNum.text = horseData.startSpeed;//起跑属性
             m_SuDuNum.text = horseData.speed;// 速度属性
-            m_NaiLiNum.text = horseData.endurance;//耐力属性
+            m_NaiLiNum.text = horseData.endurance;//耐力属性z
             m_ZhiHuiNum.text = horseData.wisdom;//智慧属性
             m_YuanQiZhiNum.text = horseData.fatigue;//元气值属性
 
